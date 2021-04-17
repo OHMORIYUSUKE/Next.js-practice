@@ -9,6 +9,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+// 不要なファイル
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Posts: NextPage = () => {
+const Members: NextPage = () => {
     const classes = useStyles();
     const [posts, setPosts] = useState([]);
     useEffect(() => {
@@ -117,7 +119,7 @@ const Posts: NextPage = () => {
         )
         .then((res) => {
           window.alert('投稿が完了しました。');
-          Router.push('/posts');
+          Router.push('/members');
         })
         .catch((error) => {
           console.log(error);
@@ -160,4 +162,4 @@ const Posts: NextPage = () => {
   );
 };
 
-export default Posts;
+export default Members;
