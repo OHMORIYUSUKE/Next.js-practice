@@ -11,6 +11,8 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig';
 
+import axios from 'axios';
+
 // ログイン処理を行う
 
 export function UserIcon() {
@@ -80,6 +82,31 @@ export function UserIcon() {
                     console.log(idToken);
                     //ローカルストレージにTokenを保存
                     localStorage.setItem('Token', idToken);
+
+                    // laravelにログイン処理をさせる-------------------------------------------------------
+                    axios
+                    .post(
+                        'http://localhost:8000/api/v1/user',
+                        {
+                            name: userName,
+                        },
+                        {
+                        headers: {
+                            Authorization: `Bearer ${idToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                        }
+                    )
+                    .then((res:any) => {
+                        console.log(res);
+                        console.log('新規ユーザーです。');
+                        window.alert('ログインしました。');
+                        Router.push('/');
+                    })
+                    .catch((error:any) => {
+                        console.log('Error : ' + JSON.stringify(error));
+                        window.alert('ログインに失敗しました。');
+                    });
                     Router.push('/');
                 })
           })

@@ -7,6 +7,8 @@ import Header from '../components/Header';
 
 import axios from 'axios';
 
+import NewPost from '../components/NewPost';
+
 export default function Home() {
   const [posts, setPosts] = useState([]);
     useEffect(() => {
@@ -26,7 +28,7 @@ export default function Home() {
         <Grid item md={6} >
           {posts.map((post,idx_i) => (
             <PostCard
-              user_id={post['user_id']}
+              user_id={post['u_id']}
               name={post['name']}
               post_id={post['id']}
               content={post['content']}
@@ -36,6 +38,7 @@ export default function Home() {
           ))}
         </Grid>
       </Grid>
+      <NewPost />
     </>
   )
 }
