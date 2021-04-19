@@ -132,10 +132,27 @@ export function UserIcon() {
       }
     
       function logout():void {
-        localStorage.removeItem('icon_url');
-        localStorage.removeItem('Token');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('userName');
+        const u_id = localStorage.getItem('u_id');
+        const idToken = localStorage.getItem('Token');
+        axios.request({
+            method: 'delete',
+            url: 'http://localhost:8000/api/v1/user',
+            data: {u_id: u_id},
+          })
+        .then((res:any) => {
+            console.log(res);
+            localStorage.removeItem('icon_url');
+            localStorage.removeItem('Token');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('u_id');
+            window.alert('ログアウトしました。');
+            Router.push('/');
+        })
+        .catch((error:any) => {
+            console.log('Error : ' + JSON.stringify(error));
+            window.alert('ログアウトに失敗しました。');
+        });
         handleClose();
       }    
 
