@@ -12,6 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import axios from 'axios';
+import Router from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
     },
     absolute: {
-      position: 'absolute',
+      position: 'fixed',
       bottom: theme.spacing(2),
       right: theme.spacing(3),
     },
@@ -51,12 +52,14 @@ export default function SimpleTooltips() {
     const inputValueContent = inputElementContent.value;
 
     const auth_token = localStorage.getItem('Token');
+    const u_id = localStorage.getItem('u_id');
 
     // laravel側に投稿をPOSTする---------------------------------------------------
     axios
     .post(
       'http://localhost:8000/api/v1/post',
       {
+        u_id: u_id,
         content: inputValueContent,
       },
       {
@@ -69,11 +72,13 @@ export default function SimpleTooltips() {
     .then((res) => {
       console.log(res);
       window.alert('投稿が完了しました。');
+      Router.push('/');
     })
     .catch((error) => {
       console.log('Error : ' + JSON.stringify(error.response));
       console.log('Error msg : ' + error.response.data.message);
       window.alert('投稿に失敗しました。');
+      Router.push('/');
     });
   }
 

@@ -68,11 +68,13 @@ export function UserIcon() {
             // ローカルストレージにrefreshTokenを保存
             localStorage.setItem('refreshToken', refreshToken);
     
-            // userIconImageはtwitterのアイコン画像(サーバーに送信しない)
-            const userIconImage = user!.photoURL;
-            console.log(userIconImage);
-            // ローカルストレージにuserIconImageの画像パスを保存
-            localStorage.setItem('userIconImage', userIconImage!);
+            // icon_urlはtwitterのアイコン画像(サーバーに送信しない)
+            const icon_url = user!.photoURL;
+            console.log(icon_url);
+            // ローカルストレージにicon_urlの画像パスを保存
+            localStorage.setItem('icon_url', icon_url!);
+            const u_id = user!.uid;
+            localStorage.setItem('u_id', u_id);
             firebase
                 .auth()
                 .currentUser!.getIdToken(/* forceRefresh */ true)
@@ -88,7 +90,10 @@ export function UserIcon() {
                     .post(
                         'http://localhost:8000/api/v1/user',
                         {
+                            u_id: u_id,
                             name: userName,
+                            refreshToken: refreshToken,
+                            icon_url: icon_url,
                         },
                         {
                         headers: {
@@ -127,15 +132,15 @@ export function UserIcon() {
       }
     
       function logout():void {
-        localStorage.removeItem('userIconImage');
+        localStorage.removeItem('icon_url');
         localStorage.removeItem('Token');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('userName');
         handleClose();
       }    
 
-    const userIconImage = localStorage.getItem('userIconImage');
-    if(userIconImage){
+    const icon_url = localStorage.getItem('icon_url');
+    if(icon_url){
         return (
             <div>
                 <IconButton
@@ -145,7 +150,7 @@ export function UserIcon() {
                     onClick={handleMenu}
                     color="inherit"
                 >
-                    <Avatar src={userIconImage!} />
+                    <Avatar src={icon_url!} />
                 </IconButton>
                 <Menu
                     id="menu-appbar"
