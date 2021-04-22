@@ -90,10 +90,11 @@ export function UserIcon() {
                     .post(
                         'http://localhost:8000/api/v1/user',
                         {
-                            u_id: u_id,
-                            name: userName,
-                            refreshToken: refreshToken,
-                            icon_url: icon_url,
+                            // u_id: u_id,
+                            // name: userName,
+                            // refreshToken: refreshToken,
+                            // icon_url: icon_url,
+                            idToken: idToken,
                         },
                         {
                         headers: {
@@ -105,12 +106,12 @@ export function UserIcon() {
                     .then((res:any) => {
                         console.log(res);
                         console.log('新規ユーザーです。');
-                        window.alert('ログインしました。');
+                        window.alert('登録完了しました。');
                         Router.push('/');
                     })
                     .catch((error:any) => {
                         console.log('Error : ' + JSON.stringify(error));
-                        window.alert('ログインに失敗しました。');
+                        window.alert('ログインしました。あかん');
                     });
                     Router.push('/');
                 })
@@ -132,15 +133,6 @@ export function UserIcon() {
       }
     
       function logout():void {
-        const u_id = localStorage.getItem('u_id');
-        const idToken = localStorage.getItem('Token');
-        axios.request({
-            method: 'delete',
-            url: 'http://localhost:8000/api/v1/user',
-            data: {u_id: u_id},
-          })
-        .then((res:any) => {
-            console.log(res);
             localStorage.removeItem('icon_url');
             localStorage.removeItem('Token');
             localStorage.removeItem('refreshToken');
@@ -148,12 +140,7 @@ export function UserIcon() {
             localStorage.removeItem('u_id');
             window.alert('ログアウトしました。');
             Router.push('/');
-        })
-        .catch((error:any) => {
-            console.log('Error : ' + JSON.stringify(error));
-            window.alert('ログアウトに失敗しました。');
-        });
-        handleClose();
+            handleClose();
       }    
 
     const icon_url = localStorage.getItem('icon_url');

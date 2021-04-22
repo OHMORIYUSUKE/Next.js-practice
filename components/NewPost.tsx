@@ -72,7 +72,7 @@ export default function SimpleTooltips() {
     .then((res) => {
       console.log(res);
       window.alert('投稿が完了しました。');
-      Router.push('/');
+      Router.reload();
     })
     .catch((error) => {
       console.log('Error : ' + JSON.stringify(error.response));
