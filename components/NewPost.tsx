@@ -52,21 +52,14 @@ export default function SimpleTooltips() {
     const inputValueContent = inputElementContent.value;
 
     const auth_token = localStorage.getItem('Token');
-    const u_id = localStorage.getItem('u_id');
 
     // laravel側に投稿をPOSTする---------------------------------------------------
     axios
     .post(
       'http://localhost:8000/api/v1/post',
       {
-        u_id: u_id,
+        idToken: auth_token,
         content: inputValueContent,
-      },
-      {
-        headers: {
-            Authorization: `Bearer ${auth_token}`,
-            'Content-Type': 'application/json',
-        },
       }
     )
     .then((res) => {
@@ -98,7 +91,7 @@ export default function SimpleTooltips() {
       >
         <DialogTitle id="alert-dialog-title">{"投稿内容を入力"}</DialogTitle>
         <DialogContent>
-            <TextareaAutosize id='content' aria-label="minimum height" rowsMin={10} placeholder="いま、なにをしてる？" />
+            <TextareaAutosize id='content' aria-label="minimum height" rowsMin={15} style={{minWidth: '500px',fontSize: 'large'}} placeholder="いま、なにをしてる？" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">

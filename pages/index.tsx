@@ -15,7 +15,7 @@ export default function Home() {
         (async () => {
           try {
             const res = await axios.get('http://localhost:8000/api/v1/post');
-            setPosts(res.data);
+            setPosts(res.data.reverse());
           } catch (err) {
             console.log(err);
           }

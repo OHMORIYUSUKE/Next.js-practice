@@ -90,17 +90,7 @@ export function UserIcon() {
                     .post(
                         'http://localhost:8000/api/v1/user',
                         {
-                            // u_id: u_id,
-                            // name: userName,
-                            // refreshToken: refreshToken,
-                            // icon_url: icon_url,
                             idToken: idToken,
-                        },
-                        {
-                        headers: {
-                            Authorization: `Bearer ${idToken}`,
-                            'Content-Type': 'application/json',
-                        },
                         }
                     )
                     .then((res:any) => {
@@ -110,8 +100,12 @@ export function UserIcon() {
                         Router.push('/');
                     })
                     .catch((error:any) => {
-                        console.log('Error : ' + JSON.stringify(error));
-                        window.alert('ログインしました。あかん');
+                        console.log(error.response.data.message);
+                        if(error.response.data.message === 'user already exists'){
+                            window.alert('ログインしました。');
+                        }else{
+                            window.alert('エラー');
+                        }
                     });
                     Router.push('/');
                 })
@@ -133,13 +127,28 @@ export function UserIcon() {
       }
     
       function logout():void {
-            localStorage.removeItem('icon_url');
-            localStorage.removeItem('Token');
-            localStorage.removeItem('refreshToken');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('u_id');
-            window.alert('ログアウトしました。');
-            Router.push('/');
+            const idToken = localStorage.getItem('Token');
+            axios
+            .request({
+                method: 'delete',
+                url: 'http://localhost:8000/api/v1/user',
+                data: {idToken: idToken},
+            })
+            .then((res:any) => {
+                console.log(res);
+                localStorage.removeItem('icon_url');
+                localStorage.removeItem('Token');
+                localStorage.removeItem('refreshToken');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('u_id');
+                window.alert('ログアウトしました。');
+                Router.push('/');
+            })
+            .catch((error:any) => {
+                console.log(error.response.data.message);
+                window.alert('エラー');
+                Router.push('/');
+            });
             handleClose();
       }    
 

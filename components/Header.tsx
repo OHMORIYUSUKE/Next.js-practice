@@ -34,7 +34,7 @@ export default function MenuAppBar() {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" href='/'>
-            <p>5チャンネル</p>
+            <p>Goチャンネル</p>
           </IconButton>
           <Grid container justify="flex-end">
               <DynamicComponentUserIcon />
