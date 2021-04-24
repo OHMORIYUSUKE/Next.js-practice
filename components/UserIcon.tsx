@@ -128,27 +128,20 @@ export function UserIcon() {
     
       function logout():void {
             const idToken = localStorage.getItem('Token');
-            axios
-            .request({
-                method: 'delete',
-                url: 'http://localhost:8000/api/v1/user',
-                data: {idToken: idToken},
-            })
-            .then((res:any) => {
-                console.log(res);
-                localStorage.removeItem('icon_url');
-                localStorage.removeItem('Token');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('userName');
-                localStorage.removeItem('u_id');
+            localStorage.removeItem('icon_url');
+            localStorage.removeItem('Token');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('u_id');
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            firebase.auth().signOut().then(() => {
                 window.alert('ログアウトしました。');
-                Router.push('/');
-            })
-            .catch((error:any) => {
-                console.log(error.response.data.message);
+              }).catch((error) => {
+                console.log('Error'+error);
                 window.alert('エラー');
-                Router.push('/');
-            });
+              })
             handleClose();
       }    
 
