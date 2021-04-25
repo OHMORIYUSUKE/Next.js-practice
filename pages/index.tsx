@@ -103,8 +103,9 @@ export default function Home() {
         <Grid item md={6} >
           {posts.map((post,idx_i) => (
             <PostCard
-              user_id={post['u_id']}
+              id={post['id']}
               name={post['name']}
+              user_id={post['u_id']}
               post_id={post['id']}
               content={post['content']}
               created_at={post['created_at']}
