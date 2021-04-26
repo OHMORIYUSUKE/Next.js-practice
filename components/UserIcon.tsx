@@ -90,8 +90,14 @@ export function UserIcon() {
                     .post(
                         'http://localhost:8000/api/v1/user',
                         {
-                            idToken: idToken,
-                        }
+                            // nothing
+                        },
+                        {
+                            headers: {
+                              Authorization: `Bearer ${idToken}`,
+                              'Content-Type': 'application/json',
+                            },
+                          }
                     )
                     .then((res:any) => {
                         console.log(res);

@@ -78,8 +78,13 @@ export default function Home() {
     .post(
       'http://localhost:8000/api/v1/post',
       {
-        idToken: auth_token,
         content: inputValueContent,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${auth_token}`,
+          'Content-Type': 'application/json',
+        },
       }
     )
     .then((res) => {
