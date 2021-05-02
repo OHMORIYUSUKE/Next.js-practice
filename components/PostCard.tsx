@@ -128,32 +128,7 @@ const PostCard: React.FC<Props> = (props) => {
          {props.content}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton onClick={handleClickOpen} aria-label="add to favorites">
-          <ReplyIcon />
-        </IconButton>
-      </CardActions>
       </Card>
-    <Dialog
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-      <DialogTitle id="alert-dialog-title">{`${props.name}に返信する`}</DialogTitle>
-        <DialogContent>
-            <TextareaAutosize id='content' aria-label="minimum height" rowsMin={15} style={{minWidth: '500px',fontSize: 'large'}} placeholder="いま、なにをしてる？" />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            閉じる
-          </Button>
-          <Button onClick={submit} color="primary" autoFocus>
-            投稿
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
     );
 };
